@@ -1,10 +1,11 @@
+# Helferlein: Luggas 🐔
+
 import customtkinter as ctk
 import random
 
 # configurations for the whole root and overlay
 ctk.set_appearance_mode("light")
 # ctk.set_default_color_theme("green")
-
 
 # root = ability to create windows and GUI
 root = ctk.CTk()
@@ -14,10 +15,6 @@ root.resizable(False, False)
 
 random.seed()
 rangeG = 1000
-randomNumber = random.randint(0, rangeG)
-randomNumber02 = random.randint(0, rangeG)
-guesses = 0
-guesses02 = 0
 playCounter = 0
 maxTries: int = 3
 
@@ -89,6 +86,9 @@ class PlayerActionDisplayer:
         global rangeG
         return random.randint(0, rangeG)
 
+    def __checkProgressBar(self) -> bool:
+        return self.progressBar.get() == 1
+
     def __check(self) -> None:
         global maxTries
 
@@ -111,8 +111,10 @@ class PlayerActionDisplayer:
         self.guessesCounterLabel.configure(text=str(len(self.guessesList)))
         self.progressBar.set(len(self.guessesList) / (maxTries))
 
-        if self.progressBar.get() == 1:
+        if self.__checkProgressBar() == True:
             self.winningLabel.configure(text="You lost!")
+            # player1Action.deactivate()
+            # player2Action.deactivate()
 
         PlayerActionDisplayer.switchBetweenPlayers()
 
@@ -121,18 +123,13 @@ class PlayerActionDisplayer:
         global playCounter
         global player1Action
         global player2Action
-
         if (playCounter % 2) == 0:
             player1Action.activate()
             player2Action.deactivate()
         else:
             player1Action.deactivate()
             player2Action.activate()
-
         playCounter += 1
-
-
-##//FUNCTIONS\\##
 
 
 # FUNC: all stuff what should do before start
