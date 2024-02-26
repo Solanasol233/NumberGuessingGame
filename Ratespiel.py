@@ -34,10 +34,12 @@ class PlayerActionDisplayer:
         progressBar: ctk.CTkProgressBar,
     ) -> None:
         self.frame = frame
+
         self.playerNameLabel = playerNameLabel
         self.guessesCounterLabel = guessesCounterLabel
         self.indicatorLabel = indicatorLabel
         self.memoryLabel = memoryLabel
+
         self.numberEntry = numberEntry
         self.checkButton = checkButton
         self.newRandomValueButton = newRandomValueButton
@@ -123,12 +125,18 @@ class PlayerActionDisplayer:
         global playCounter
         global player1Action
         global player2Action
-        if (playCounter % 2) == 0:
-            player1Action.activate()
-            player2Action.deactivate()
+        Progress = int(player1Action.progressBar.get())
+        Progress02 = int(player2Action.progressBar.get())
+        if (Progress < 1) or (Progress02 < 1):
+            if (playCounter % 2) == 0:
+                player1Action.activate()
+                player2Action.deactivate()
+            else:
+                player1Action.deactivate()
+                player2Action.activate()
         else:
             player1Action.deactivate()
-            player2Action.activate()
+            player2Action.deactivate()
         playCounter += 1
 
 
